@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 
-const ErrorHandler = (req: Request, res: Response, status = 500, message = 'Interval server error') => {
+const ErrorHandler = (_req: Request, res: Response, status = 500, message = 'Interval server error'): void => {
   const err = {
     statusCode: status,
     message,

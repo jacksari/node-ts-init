@@ -1,6 +1,6 @@
 // Servidor de Express
 import express from 'express';
-import http from 'http';
+// import http from 'http';
 import path from 'path';
 import cors from 'cors';
 import './config/db';
@@ -28,7 +28,7 @@ export default class Server {
         //this.io = socketio( this.server, { /* configuraciones */ } );
     }
 
-    middlewares() {
+    middlewares(): void {
         // Desplegar el directorio público
         this.app.use( express.static( path.resolve( __dirname, '../src/public' ) ) );
 
@@ -39,20 +39,20 @@ export default class Server {
 
     }
 
-    routes() {
-        this.app.use('/api/v1/project', routeProject);        
+    routes(): void {
+        this.app.use("/api/v1/project", routeProject);        
     }
 
     // Esta configuración se puede tener aquí o como propieda de clase
-    configurarSockets() {
+    configurarSockets(): void {
         //new Sockets( this.io );
     }
 
-    static init(port: number){
+    static init(port: number): Server{
         return new Server(port);
     }
 
-    start() {
+    start(): void {
 
         // Inicializar Middlewares
         this.middlewares();

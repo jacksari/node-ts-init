@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import environment from "./environments/environment";
 
-mongoose.connect(environment.DB.MONGO_DB!, {
+mongoose.connect(environment.DB.MONGO_DB, {
     
 })
 

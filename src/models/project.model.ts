@@ -1,11 +1,5 @@
 import { Schema, model } from 'mongoose';
-
-export interface Project {
-  name: string;
-  description: string;
-  created_at: any,
-  updated_at: any,
-}
+import { Project } from '../data/project.data';
 
 const ProjectSchema = new Schema<Project>({
   name: {
@@ -18,17 +12,18 @@ const ProjectSchema = new Schema<Project>({
   },  
   created_at: {
     type: Date,
-    default: Date.now(),
+    default: new Date(),
   },
   updated_at: {
     type: Date,
-    default: Date.now(),
+    default: new Date(),
   },
 }, { collection: 'projects' });
 
 ProjectSchema.method('toJSON', function () {
-  const { __v, _id, ...object } = this.toObject();
-  // object.uid = _id;
+  //const { __v, _id, ...object } = this.toObject();
+  const { _id, ...object } = this.toObject();
+  object.uid = _id;
   return object;
 });
 

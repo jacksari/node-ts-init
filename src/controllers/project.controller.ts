@@ -2,8 +2,13 @@ import { Request, Response } from 'express';
 import ErrorHandler from '../middlewares/error';
 import serviceProject from '../services/project.service';
 
-export const createProject = async (req: Request, res: Response) => {
+const createProject = async (req: Request, res: Response): Promise<void> => {
+  const { name } = req.body;
   try {
+    const projectExist = await serviceProject.getProjectByName(name);
+    if(projectExist){
+      return ErrorHandler(req, res, 404, 'El proyecto ya existe');
+    }
     const project = await serviceProject.createProject(req.body);
     res.status(200).json({
       project,
@@ -15,7 +20,8 @@ export const createProject = async (req: Request, res: Response) => {
   }
 };
 
-export const getProjects = async (req: Request, res: Response) => {
+const getProjects = async (req: Request, res: Response): Promise<void> => {
+  
   try {
     const projects = await serviceProject.getProjects();
     res.status(200).json({
@@ -27,7 +33,7 @@ export const getProjects = async (req: Request, res: Response) => {
   }
 };
 
-export const getProject = async (req: Request, res: Response) => {
+const getProject = async (req: Request, res: Response): Promise<void> => {
   try {
     const { id } = req.params;
     const project = await serviceProject.getProject(id);
@@ -39,3 +45,9 @@ export const getProject = async (req: Request, res: Response) => {
     ErrorHandler(req, res, 500, 'Error al listar proyecto');
   }
 };
+
+export {
+  createProject,
+  getProject,
+  getProjects
+}
